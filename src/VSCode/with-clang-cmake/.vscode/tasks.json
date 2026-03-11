@@ -1,0 +1,47 @@
+{
+    "tasks": [
+        {
+            "type": "process",
+            "label": "CMake: Configure",
+            "command": "C:\\Program Files\\CMake\\bin\\cmake.exe",
+            "args": [
+                "-B",
+                "build",
+                "-G",
+                "Ninja",
+                "-DCMAKE_CXX_COMPILER=C:/msys64/ucrt64/bin/clang++.exe",
+                "-DCMAKE_MAKE_PROGRAM=C:/msys64/ucrt64/bin/ninja.exe",
+                "-Wno-dev"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "Configure CMake with Clang + Ninja"
+        },
+        {
+            "type": "process",
+            "label": "CMake: Build",
+            "command": "C:\\Program Files\\CMake\\bin\\cmake.exe",
+            "args": [
+                "--build",
+                "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "CMake: Configure"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build the project with CMake"
+        }
+    ],
+    "version": "2.0.0"
+}

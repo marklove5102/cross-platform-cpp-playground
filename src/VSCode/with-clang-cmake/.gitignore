@@ -1,0 +1,27 @@
+# Build directory
+build/
+
+# Build artifacts (if building outside the build/ directory)
+*.o
+*.obj
+*.exe
+*.out
+
+# Clang precompiled modules
+*.pcm
+
+# Libraries
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Debug files
+*.pdb
+*.ilk
+*.dSYM/
+
+# Precompiled headers
+*.gch
+*.pch

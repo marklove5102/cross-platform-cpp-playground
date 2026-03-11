@@ -1,0 +1,129 @@
+{
+    "tasks": [
+        {
+            "type": "process",
+            "label": "Precompile std module",
+            "command": "C:\\msys64\\ucrt64\\bin\\clang++.exe",
+            "args": [
+                "-std=c++23",
+                "-x",
+                "c++-module",
+                "--precompile",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-Wno-reserved-module-identifier",
+                "C:\\msys64\\ucrt64\\include\\c++\\15.2.0\\bits\\std.cc",
+                "-o",
+                "std.pcm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Precompile the std module interface (produces std.pcm)"
+        },
+        {
+            "type": "process",
+            "label": "Compile std module object",
+            "command": "C:\\msys64\\ucrt64\\bin\\clang++.exe",
+            "args": [
+                "-c",
+                "-g",
+                "std.pcm",
+                "-o",
+                "std.o"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "Precompile std module"
+            ],
+            "detail": "Compile std.pcm to std.o object file"
+        },
+        {
+            "type": "process",
+            "label": "Precompile project modules",
+            "command": "C:\\msys64\\ucrt64\\bin\\clang++.exe",
+            "args": [
+                "-std=c++23",
+                "--precompile",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-fmodule-file=std=std.pcm",
+                "mod.cppm",
+                "-o",
+                "mod.pcm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "Compile std module object"
+            ],
+            "detail": "Precompile project module interfaces (produces mod.pcm)"
+        },
+        {
+            "type": "process",
+            "label": "Compile project module objects",
+            "command": "C:\\msys64\\ucrt64\\bin\\clang++.exe",
+            "args": [
+                "-c",
+                "-g",
+                "mod.pcm",
+                "-o",
+                "mod.o"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "Precompile project modules"
+            ],
+            "detail": "Compile mod.pcm to mod.o object file"
+        },
+        {
+            "type": "process",
+            "label": "C/C++: clang++.exe build and link",
+            "command": "C:\\msys64\\ucrt64\\bin\\clang++.exe",
+            "args": [
+                "-std=c++23",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-fmodule-file=std=std.pcm",
+                "-fmodule-file=mod=mod.pcm",
+                "main.cpp",
+                "std.o",
+                "mod.o",
+                "-o",
+                "main.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "Compile project module objects"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build main with modules"
+        }
+    ],
+    "version": "2.0.0"
+}

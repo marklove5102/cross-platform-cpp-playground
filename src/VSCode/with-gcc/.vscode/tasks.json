@@ -1,0 +1,78 @@
+{
+    "tasks": [
+        {
+            "type": "process",
+            "label": "Compile std module",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "args": [
+                "-std=c++23",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-c",
+                "C:\\msys64\\ucrt64\\include\\c++\\15.2.0\\bits\\std.cc"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Compile the std module interface (produces std.o + gcm.cache/std.gcm)"
+        },
+        {
+            "type": "process",
+            "label": "Compile project modules",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "args": [
+                "-std=c++23",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-g",
+                "-c",
+                "mod.cppm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "Compile std module"
+            ],
+            "detail": "Compile project module interfaces"
+        },
+        {
+            "type": "process",
+            "label": "C/C++: g++.exe build and link",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "args": [
+                "-std=c++23",
+                "-fmodules-ts",
+                "-fdiagnostics-color=always",
+                "-g",
+                "main.cpp",
+                "std.o",
+                "mod.o",
+                "-o",
+                "main.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": [
+                "Compile project modules"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build main with modules"
+        }
+    ],
+    "version": "2.0.0"
+}
