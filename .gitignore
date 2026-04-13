@@ -400,3 +400,5 @@ FodyWeavers.xsd
 *.o
 /src/clang-cmd/helloclangwindows.exe
 /src/clang-cmd/test.exe
+
+build/
